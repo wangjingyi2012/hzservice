@@ -17,4 +17,6 @@ public interface BlogService {
 
     int postComment(CommentInputDto input);
 
+    BlogDto findById(long id);
+
 }

@@ -118,4 +118,23 @@ public class BlogServiceImpl implements BlogService {
         }
         return commentMapper.addComment(entity);
     }
+
+    @Override
+    public BlogDto findById(long id) {
+        BlogEntity blog = blogMapper.findById(id);
+        if (blog == null) {
+            return null;
+        }
+        BlogDto dto = new BlogDto();
+        dto.setId(blog.getId());
+        dto.setTitle(blog.getTitle());
+        dto.setPubtime(blog.getPubtime());
+        dto.setContent(blog.getContent());
+        if (blog.getAnymous() == 1) {
+            dto.setUsername(blog.getAnyname());
+        } else {
+            dto.setUsername(blog.getAuthname());
+        }
+        return dto;
+    }
 }

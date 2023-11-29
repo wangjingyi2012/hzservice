@@ -1,6 +1,7 @@
 package com.wjy.hz.controller;
 
 import com.wjy.hz.model.api.ApiResponse;
+import com.wjy.hz.model.dto.BlogDto;
 import com.wjy.hz.model.dto.BlogInputDto;
 import com.wjy.hz.model.dto.CommentInputDto;
 import com.wjy.hz.service.BlogService;
@@ -32,6 +33,12 @@ public class BlogController {
     @PostMapping("/api/blog/post-comment")
     public String postComment(@RequestBody CommentInputDto commentInputDto) {
         return blogService.postComment(commentInputDto) > 1 ? ApiResponse.ok("ok") : ApiResponse.intError();
+    }
+
+    @GetMapping("/api/blog/blog-content")
+    public String blogContent(@RequestParam("id") long id) {
+        BlogDto dto = blogService.findById(id);
+        return dto != null ? ApiResponse.ok(dto) : ApiResponse.resNotFound();
     }
 
 }
