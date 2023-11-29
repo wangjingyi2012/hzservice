@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface BlogMapper {
 
-    @Insert("INSERT INTO blogs (title, content, pubtime, author, authname, anymous, anyname) VALUES (#{title}, #{content}, #{pubtime}, #{author}, #{authname}, #{aynmous}, #{anyname})")
+    @Insert("INSERT INTO blogs (title, content, pubtime, author, authname, anymous, anyname) VALUES (#{title}, #{content}, #{pubtime}, #{author}, #{authname}, #{anymous}, #{anyname})")
     int addBlog(BlogEntity blogEntity);
 
     @Select("select * from blogs order by id desc")

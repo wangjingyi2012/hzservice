@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    @Insert("INSERT INTO comments (content, pubtime, author, authname, anymous, anyname, blog) VALUES (#{content}, #{pubtime}, #{author}, #{authname}, #{aynmous}, #{anyname}, #{blog})")
+    @Insert("INSERT INTO comments (content, pubtime, author, authname, anymous, anyname, blog) VALUES (#{content}, #{pubtime}, #{author}, #{authname}, #{anymous}, #{anyname}, #{blog})")
     int addComment(CommentEntity commentEntity);
 
     @Select("select * from comments where blog = #{bid}")
