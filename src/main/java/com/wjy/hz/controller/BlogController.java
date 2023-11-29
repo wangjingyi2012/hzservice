@@ -27,12 +27,12 @@ public class BlogController {
 
     @PostMapping("/api/blog/post-blog")
     public String postBlog(@RequestBody BlogInputDto blogInputDto) {
-        return blogService.postBlog(blogInputDto) > 1 ? ApiResponse.ok("ok") : ApiResponse.intError();
+        return blogService.postBlog(blogInputDto) > 0 ? ApiResponse.ok("ok") : ApiResponse.intError();
     }
 
     @PostMapping("/api/blog/post-comment")
     public String postComment(@RequestBody CommentInputDto commentInputDto) {
-        return blogService.postComment(commentInputDto) > 1 ? ApiResponse.ok("ok") : ApiResponse.intError();
+        return blogService.postComment(commentInputDto) > 0 ? ApiResponse.ok("ok") : ApiResponse.intError();
     }
 
     @GetMapping("/api/blog/blog-content")
