@@ -17,7 +17,7 @@ public interface CommentMapper {
     @Select("select * from comments where blog = #{bid}")
     List<CommentEntity> blogComments(@Param("bid") long blogId);
 
-    @Select("select coun(*)t from comments where blog = #{bid}")
+    @Select("select count(*) from comments where blog = #{bid}")
     int blogCommentsCount(@Param("bid") long blogId);
 
 }
