@@ -19,4 +19,6 @@ public class CommentDto {
 
     private String username;
 
+    private String avator;
+
 }

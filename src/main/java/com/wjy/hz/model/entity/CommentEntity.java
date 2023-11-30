@@ -27,4 +27,8 @@ public class CommentEntity {
 
     private long blog;
 
+    private String avator;
+
+    private String realavator;
+
 }

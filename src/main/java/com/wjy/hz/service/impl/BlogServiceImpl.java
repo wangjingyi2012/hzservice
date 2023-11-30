@@ -21,6 +21,8 @@ import java.util.List;
 @Service
 public class BlogServiceImpl implements BlogService {
 
+    private final String anymousAvatar = "http://www.hz-study-system.com/wjy/images/default_avatar.jpg";
+
     @Resource
     BlogMapper blogMapper;
 
@@ -66,8 +68,10 @@ public class BlogServiceImpl implements BlogService {
             dto.setPubtime(comment.getPubtime());
             if (comment.getAnymous() == 1) {
                 dto.setUsername(comment.getAnyname());
+                dto.setAvator(comment.getAvator());
             } else {
                 dto.setUsername(comment.getAuthname());
+                dto.setAvator(comment.getRealavator());
             }
             dtos.add(dto);
         });
@@ -87,9 +91,12 @@ public class BlogServiceImpl implements BlogService {
         }
         entity.setAuthor(student.getId());
         entity.setAuthname(student.getRealname());
+        entity.setAvator(anymousAvatar);
+        entity.setRealavator(student.getAvator());
         if (input.getAnymous().equals("anymous")) {
             entity.setAnymous(1);
             entity.setAnyname(student.getUsername());
+
         } else {
             entity.setAnymous(0);
             entity.setAnyname(student.getRealname());
@@ -109,6 +116,8 @@ public class BlogServiceImpl implements BlogService {
             return 0;
         }
         entity.setAuthname(student.getRealname());
+        entity.setAvator(anymousAvatar);
+        entity.setRealavator(student.getAvator());
         if (input.getAnymous().equals("anymous")) {
             entity.setAnymous(1);
             entity.setAnyname(student.getUsername());
@@ -132,8 +141,10 @@ public class BlogServiceImpl implements BlogService {
         dto.setContent(blog.getContent());
         if (blog.getAnymous() == 1) {
             dto.setUsername(blog.getAnyname());
+            dto.setAvator(blog.getAvator());
         } else {
             dto.setUsername(blog.getAuthname());
+            dto.setAvator(blog.getRealavator());
         }
         return dto;
     }

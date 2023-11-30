@@ -23,4 +23,6 @@ public class BlogDto {
 
     private int commentCount;
 
+    private String avator;
+
 }

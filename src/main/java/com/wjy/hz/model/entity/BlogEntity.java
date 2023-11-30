@@ -27,4 +27,8 @@ public class BlogEntity {
 
     private String anyname;
 
+    private String avator;
+
+    private String realavator;
+
 }
