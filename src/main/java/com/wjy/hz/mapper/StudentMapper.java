@@ -18,4 +18,7 @@ public interface StudentMapper {
 
     @Update("update students set username = #{username} where id = #{id}")
     int saveUsername(@Param("username") String username, @Param("id") long id);
+
+    @Update("update students set avator = #{avator} where id = #{sid}")
+    int updateAvator(@Param("sid") long sid, @Param("avator") String avator);
 }

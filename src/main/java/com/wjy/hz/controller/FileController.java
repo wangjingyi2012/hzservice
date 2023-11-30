@@ -1,17 +1,28 @@
 package com.wjy.hz.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wjy.hz.model.api.ApiResponse;
+import com.wjy.hz.service.FileStorageService;
+import com.wjy.hz.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 
 @RestController
 public class FileController {
+
+    @Resource
+    FileStorageService fileStorageService;
+
+    @Resource
+    StudentService studentService;
+
 
     @PostMapping("/api/upload/image")
     public ResponseEntity<String> uploadImage(@RequestParam("wangeditor-uploaded-image") MultipartFile image) {
@@ -53,6 +64,20 @@ public class FileController {
 
         // 返回图片的访问URL
         return "http://www.hz-study-system.com/wjy/images/" + image.getOriginalFilename();
+    }
+
+
+
+    @PostMapping("/api/student/upload-avatar")
+    public String uploadAvatar(@RequestParam("avatar") MultipartFile file, @RequestParam("sid") Long studentId) {
+        try {
+            // 更新用户头像信息
+             int result = studentService.uploadAvator(studentId, file);
+            return result > 0 ? ApiResponse.ok(studentId) : ApiResponse.intError();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.intError();
+        }
     }
 
 }

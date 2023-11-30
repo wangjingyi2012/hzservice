@@ -9,3 +9,5 @@ server:
   port: 80
   servlet:
     context-path: /
+file:
+  upload-dir: /webapp/images/uploads/

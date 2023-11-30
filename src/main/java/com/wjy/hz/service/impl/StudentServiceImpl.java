@@ -8,8 +8,11 @@ import com.wjy.hz.model.enums.LogActions;
 import com.wjy.hz.model.dto.StudentDto;
 import com.wjy.hz.model.entity.SettingEntity;
 import com.wjy.hz.model.entity.TimelineEntity;
+import com.wjy.hz.service.FileStorageService;
 import com.wjy.hz.service.StudentService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -40,6 +43,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Resource
     ExamMapper examMapper;
+
+    @Resource
+    FileStorageService fileStorageService;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
 
     @Override
@@ -140,9 +149,12 @@ public class StudentServiceImpl implements StudentService {
         return userExamDtoList;
     }
 
+
     @Override
-    public int submitPaper(long studentId, long examId, String answers) {
-        return 0;
+    public int uploadAvator(long sid, MultipartFile file) {
+        String filename = fileStorageService.storeFile(file);
+        String filepath = "http://www.hz-study-system.com/wjy/images/" + filename;
+        return studentMapper.updateAvator(sid, filepath);
     }
 
 

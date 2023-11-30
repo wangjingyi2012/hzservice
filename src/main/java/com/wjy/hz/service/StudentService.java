@@ -4,6 +4,7 @@ import com.wjy.hz.model.dto.StudentDto;
 import com.wjy.hz.model.dto.UserExamDto;
 import com.wjy.hz.model.entity.ExamEntity;
 import com.wjy.hz.model.entity.TimelineEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +22,6 @@ public interface StudentService {
 
     List<UserExamDto> userExams(long studentId);
 
-    int submitPaper(long studentId, long examId, String answers);
+    int uploadAvator(long sid, MultipartFile file);
 
 }
