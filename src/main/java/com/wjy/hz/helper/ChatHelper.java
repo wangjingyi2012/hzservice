@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ChatHelper {
 
     private static final String API_URL = "https://api.openai.com/v1/engines/text-davinci-003/completions";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     public static String sendText(String text) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {

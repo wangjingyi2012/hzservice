@@ -23,4 +23,8 @@ public class ChatEntity {
 
     private String username;
 
+    private String cleancontext;
+
+    private String sendall;
+
 }
