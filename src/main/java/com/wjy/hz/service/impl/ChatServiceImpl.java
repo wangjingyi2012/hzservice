@@ -71,9 +71,6 @@ public class ChatServiceImpl implements ChatService {
                 historySys.setRole("assistant");
                 historySys.setContent(context.getCleancontext());
                 sends.add(historySys);
-                System.out.println(1);
-            } else {
-                System.out.println(2);
             }
         });
 
