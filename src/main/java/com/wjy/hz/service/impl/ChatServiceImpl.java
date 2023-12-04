@@ -40,7 +40,7 @@ public class ChatServiceImpl implements ChatService {
             dto.setId(entiy.getId());
             dto.setSid(userId);
             dto.setSend(entiy.getSend());
-            dto.setReceive(entiy.getReceive());
+            dto.setReceive(entiy.getCleancontext());
             dto.setTime(entiy.getTime());
             dto.setUsername(entiy.getUsername());
             dtos.add(dto);
