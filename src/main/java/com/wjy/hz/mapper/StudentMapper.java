@@ -21,4 +21,7 @@ public interface StudentMapper {
 
     @Update("update students set avator = #{avator} where id = #{sid}")
     int updateAvator(@Param("sid") long sid, @Param("avator") String avator);
+
+    @Update("update students set points = #{points} where id = #{sid}}")
+    int updatePoint(@Param("sid") long sid, @Param("points") int points);
 }

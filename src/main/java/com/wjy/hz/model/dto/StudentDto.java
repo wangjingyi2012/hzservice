@@ -28,4 +28,8 @@ public class StudentDto {
     private String profile;
 
     private String gender;
+
+    private String level;
+
+    private int points;
 }

@@ -35,4 +35,8 @@ public class StudentEntity {
 
     private int tutor;
 
+    private String level;
+
+    private int points;
+
 }

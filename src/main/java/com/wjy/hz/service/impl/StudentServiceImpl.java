@@ -64,6 +64,8 @@ public class StudentServiceImpl implements StudentService {
                     studentDto.setMotto(studentEntity.getMotto());
                     studentDto.setGender(studentEntity.getGender());
                     studentDto.setProfile(studentEntity.getProfile());
+                    studentDto.setLevel(studentEntity.getLevel());
+                    studentDto.setPoints(studentEntity.getPoints());
 
                     Optional.ofNullable(gradeMapper.selectById(studentEntity.getGrade()))
                             .ifPresent(gradeEntity -> studentDto.setGradeName(gradeEntity.getName()));
@@ -90,6 +92,8 @@ public class StudentServiceImpl implements StudentService {
                     studentDto.setMotto(studentEntity.getMotto());
                     studentDto.setGender(studentEntity.getGender());
                     studentDto.setProfile(studentEntity.getProfile());
+                    studentDto.setLevel(studentEntity.getLevel());
+                    studentDto.setPoints(studentEntity.getPoints());
 
                     Optional.ofNullable(gradeMapper.selectById(studentEntity.getGrade()))
                             .ifPresent(gradeEntity -> studentDto.setGradeName(gradeEntity.getName()));
