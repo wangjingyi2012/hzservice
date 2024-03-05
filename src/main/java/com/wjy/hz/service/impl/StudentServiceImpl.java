@@ -132,7 +132,7 @@ public class StudentServiceImpl implements StudentService {
         ues.forEach(ue -> {
             UserExamDto dto = new UserExamDto();
             ExamEntity examEntity = examMapper.byId(ue.getExam());
-            dto.setId(ue.getId());
+            dto.setId(ue.getExam());
             dto.setName(examEntity.getName());
             dto.setProfile(examEntity.getProfile());
             dto.setStart(examEntity.getStart());
