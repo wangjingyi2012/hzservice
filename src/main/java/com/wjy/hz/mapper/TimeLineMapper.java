@@ -19,5 +19,8 @@ public interface TimeLineMapper {
     @Insert("INSERT INTO timelines (title, content, happend, sid, action) VALUES (#{title}, #{content}, #{happend}, #{sid}, #{action})")
     int addAction(@Param("sid") long sid, @Param("title") String title, @Param("content") String content, @Param("happend") LocalDateTime happend, @Param("action") String action);
 
+    @Select("SELECT COUNT(*) FROM timelines WHERE sid = #{sid} AND happend >= #{startOfDay} AND happend <= #{endOfDay} AND action = '签到'")
+    Integer countTodaySign(@Param("sid") long sid, @Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
+
 
 }

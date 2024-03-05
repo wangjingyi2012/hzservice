@@ -122,8 +122,22 @@ public class StudentServiceImpl implements StudentService {
         if (settingEntity == null || settingEntity.getValue().equals("NO")) {
             return 0;
         }
-        return timeLineMapper.addAction(sid, "学习", "签到", LocalDateTime.now(), LogActions.Sign.getCode());
+
+        // 获取当前日期的开始和结束时间
+        LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusNanos(1);
+
+        // 检查是否已有当天的签到记录
+        Integer count = timeLineMapper.countTodaySign(sid, startOfDay, endOfDay);
+        if (count == null || count == 0) {
+            // 如果当天没有签到记录，则插入新的签到记录
+            return timeLineMapper.addAction(sid, "学习", "签到", LocalDateTime.now(), LogActions.Sign.getCode());
+        } else {
+            // 如果已经有签到记录，则不执行插入操作
+            return 0;
+        }
     }
+
 
     @Override
     public List<UserExamDto> userExams(long studentId) {

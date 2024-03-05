@@ -13,6 +13,8 @@ public interface UserAnswerMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(UserAnswerEntity userAnswerEntity);
 
+
+
     @Select("select * from user_answers where `exam` = #{exam} and sid = #{sid}")
     List<UserAnswerEntity> userAnswers(@Param("exam") long examId, @Param("sid") long studentId);
 
