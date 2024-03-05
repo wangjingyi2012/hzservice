@@ -135,7 +135,7 @@ public class ExamServiceImpl implements ExamService {
         ue.setExam(dto.getExam());
         ue.setClazz(stu.getClazz());
         ue.setScore(score);
-        userExamMapper.score(dto.getSid(), dto.getExam(), stu.getRealname(), stu.getClazz(), score);
+        userExamMapper.updateScore(dto.getSid(), dto.getExam(), stu.getRealname(), stu.getClazz(), score);
     }
 
     @Override
