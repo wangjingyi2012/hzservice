@@ -2,6 +2,7 @@ package com.wjy.hz.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wjy.hz.helper.IPHelper;
 import com.wjy.hz.service.IPService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,9 @@ public class IPServiceImpl implements IPService {
 
     @Override
     public String getRegionByIp(String ip) {
+        if (!IPHelper.validateIPAddress(ip)) {
+            return "IP格式错误";
+        }
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper objectMapper = new ObjectMapper();
         // 更新为新的API URL
