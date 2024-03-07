@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wjy.hz.helper.IPHelper;
 import com.wjy.hz.service.IPService;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -51,8 +54,19 @@ public class IPServiceImpl implements IPService {
         String baseUrl = "https://qifu.baidu.com/ip/geo/v1/";
         String url = baseUrl + (ipType.equals("IPv4") ? "district" : "ipv6/district") + "?ip=" + ip;
 
+        // 设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", "application/json, text/plain, */*");
+        headers.set("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8");
+        headers.set("X-Requested-With", "XMLHttpRequest");
+        headers.set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36");
+
+        // 构造请求实体，包含头部和可能的请求体
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
         try {
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+//            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 JsonNode rootNode = objectMapper.readTree(response.getBody());
                 JsonNode codeNode = rootNode.path("code");
@@ -72,6 +86,7 @@ public class IPServiceImpl implements IPService {
 //                    return String.format("Continent: %s, Country: %s, Province: %s, City: %s, District: %s, ISP: %s",
 //                            continent, country, prov, city, district, isp);
 
+                    System.out.println(dataNode);
                     return String.format("%s,%s,%s,%s,%s",
                             rootNode.path("data").path("country").asText(""),
                             rootNode.path("data").path("prov").asText(""),
