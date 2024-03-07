@@ -18,13 +18,13 @@ public class IPHelper {
      * @param ip 需要验证的IP地址。
      * @return 如果IP地址格式正确，返回"格式正确"；如果格式有误，返回"IP格式有误"。
      */
-    public static boolean validateIPAddress(String ip) {
+    public static String getIPType(String ip) {
         if (IPV4_PATTERN.matcher(ip).matches()) {
-            return true;
+            return "IPv4";
         } else if (IPV6_PATTERN.matcher(ip).matches()) {
-            return true;
+            return "IPv6";
         } else {
-            return false;
+            return "无效";
         }
     }
 

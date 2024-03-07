@@ -40,13 +40,17 @@ public class IPServiceImpl implements IPService {
 
     @Override
     public String getRegionByIp(String ip) {
-        if (!IPHelper.validateIPAddress(ip)) {
+        String ipType = IPHelper.getIPType(ip);
+        if ("无效".equals(ipType)) {
             return "IP格式错误";
         }
+
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper objectMapper = new ObjectMapper();
-        // 更新为新的API URL
-        String url = "https://qifu.baidu.com/ip/geo/v1/ipv6/district?ip=" + ip;
+        // 根据IP类型选择不同的URL
+        String baseUrl = "https://qifu.baidu.com/ip/geo/v1/";
+        String url = baseUrl + (ipType.equals("IPv4") ? "district" : "ipv6/district") + "?ip=" + ip;
+
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
@@ -68,7 +72,12 @@ public class IPServiceImpl implements IPService {
 //                    return String.format("Continent: %s, Country: %s, Province: %s, City: %s, District: %s, ISP: %s",
 //                            continent, country, prov, city, district, isp);
 
-                    return String.format("%s,%s,%s,%s %s",country, prov, city, district, isp);
+                    return String.format("%s,%s,%s,%s,%s",
+                            rootNode.path("data").path("country").asText(""),
+                            rootNode.path("data").path("prov").asText(""),
+                            rootNode.path("data").path("city").asText(""),
+                            rootNode.path("data").path("district").asText(""),
+                            rootNode.path("data").path("isp").asText(""));
                 }
             }
         } catch (Exception e) {
