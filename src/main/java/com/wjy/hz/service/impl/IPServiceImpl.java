@@ -10,8 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class IPServiceImpl implements IPService {
 
-    @Override
-    public String getRegionByIp(String ip) {
+    public String getRegionByIpV4(String ip) {
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper objectMapper = new ObjectMapper();
         String url = "https://searchplugin.csdn.net/api/v1/ip/get?ip=" + ip;
@@ -37,4 +36,43 @@ public class IPServiceImpl implements IPService {
         }
         return "未知地区"; // 如果无法获取地区，则返回默认值
     }
+
+    @Override
+    public String getRegionByIp(String ip) {
+        RestTemplate restTemplate = new RestTemplate();
+        ObjectMapper objectMapper = new ObjectMapper();
+        // 更新为新的API URL
+        String url = "https://qifu.baidu.com/ip/geo/v1/ipv6/district?ip=" + ip;
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                JsonNode rootNode = objectMapper.readTree(response.getBody());
+                JsonNode codeNode = rootNode.path("code");
+                // 检查返回的状态码是否表示成功
+                if ("Success".equals(codeNode.asText())) {
+                    JsonNode dataNode = rootNode.path("data");
+
+                    // 提取所需信息
+                    String continent = dataNode.path("continent").asText("");
+                    String country = dataNode.path("country").asText("");
+                    String prov = dataNode.path("prov").asText("");
+                    String city = dataNode.path("city").asText("");
+                    String district = dataNode.path("district").asText("");
+                    String isp = dataNode.path("isp").asText("");
+
+                    // 构造并返回信息字符串，根据需要进行格式调整
+//                    return String.format("Continent: %s, Country: %s, Province: %s, City: %s, District: %s, ISP: %s",
+//                            continent, country, prov, city, district, isp);
+
+                    return String.format("%s,%s,%s,%s %s",country, prov, city, district, isp);
+                }
+            }
+        } catch (Exception e) {
+            // 处理异常情况
+            e.printStackTrace();
+            return "查询失败或发生异常";
+        }
+        return "未知地区"; // 如果无法获取地区，则返回默认值
+    }
+
 }
