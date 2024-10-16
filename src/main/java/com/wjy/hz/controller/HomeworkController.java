@@ -31,11 +31,11 @@ public class HomeworkController {
         return ApiResponse.ok(homeworkService.getHomeworkOfUser(sid, hid));
     }
 
-    @PostMapping("/student-homework-submit")
+    @PostMapping("/api/homework/student-homework-submit")
     public String submitHomework(@RequestParam("sid") Integer sid,
                                  @RequestParam("hid") Integer hid,
                                  @RequestParam("file") MultipartFile file,
-                                 @RequestParam("comment") String comment) {
+                                 @RequestParam(value = "comment", required = false) String comment) {
         // 定义文件保存目录
         String uploadDir = "/webapp/homework/2024-1/";
         // 获取原始文件名，并加上唯一标识符防止文件名冲突
