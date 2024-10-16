@@ -29,4 +29,6 @@ public class UserHomeworkEntity {
 
     private LocalDateTime stime;
 
+    private String file;
+
 }

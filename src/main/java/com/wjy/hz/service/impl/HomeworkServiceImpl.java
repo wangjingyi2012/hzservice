@@ -87,7 +87,47 @@ public class HomeworkServiceImpl implements HomeworkService {
 
     @Override
     public Boolean submitHomework(String fileUrl, Integer sid, Integer hid) {
-        return null;
+        // 查询作业信息
+        HomeworkEntity homework = homeworkMapper.selectById(hid);
+        if (homework == null) {
+            System.out.println("作业不存在");
+            return false;
+        }
+
+        // 查询学生信息
+        StudentEntity student = studentMapper.selectById(sid);
+        if (student == null) {
+            System.out.println("学生不存在");
+            return false;
+        }
+
+        // 查询是否已经有提交记录
+        UserHomeworkEntity existingSubmission = homeworkMapper.getBySid(hid, sid);
+
+        // 如果没有记录，插入新的提交记录
+        if (existingSubmission == null) {
+            UserHomeworkEntity newSubmission = new UserHomeworkEntity();
+            newSubmission.setSid(sid); // 设置学生ID
+            newSubmission.setHid(hid); // 设置作业ID
+            newSubmission.setFile(fileUrl); // 设置文件路径
+            newSubmission.setStime(LocalDateTime.now()); // 设置提交时间
+            newSubmission.setComment(""); // 附言为空或前端传递的附言
+            newSubmission.setStatus("已提交"); // 提交状态
+
+            // 插入新提交记录
+            homeworkMapper.insertUserHomework(newSubmission);
+        } else {
+            // 如果有记录，更新提交记录
+            existingSubmission.setFile(fileUrl); // 更新文件路径
+            existingSubmission.setStime(LocalDateTime.now()); // 更新提交时间
+            existingSubmission.setComment(""); // 更新附言，假设前端会传递附言
+            existingSubmission.setStatus("已提交"); // 更新状态为已提交
+
+            // 更新现有提交记录
+            homeworkMapper.updateUserHomework(existingSubmission);
+        }
+
+        return true;
     }
 
 
