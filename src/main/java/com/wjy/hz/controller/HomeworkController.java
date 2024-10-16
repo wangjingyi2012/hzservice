@@ -4,6 +4,7 @@ import com.wjy.hz.model.api.ApiResponse;
 import com.wjy.hz.model.dto.BlogDto;
 import com.wjy.hz.model.dto.BlogInputDto;
 import com.wjy.hz.model.dto.CommentInputDto;
+import com.wjy.hz.model.dto.ReviewHomeworkDto;
 import com.wjy.hz.service.BlogService;
 import com.wjy.hz.service.HomeworkService;
 import org.springframework.web.bind.annotation.*;
@@ -43,11 +44,8 @@ public class HomeworkController {
     }
 
     @PostMapping("/api/teacher/homework/review")
-    public String reviewHomework(@RequestParam("hid") Integer hid,
-                                 @RequestParam("sid") Integer sid,
-                                 @RequestParam("score") Integer score,
-                                 @RequestParam(value = "comment", required = false) String comment) {
-        return ApiResponse.ok(homeworkService.reviewHomework(hid, sid, score, comment));
+    public String reviewHomework(@RequestBody ReviewHomeworkDto dto) {
+        return ApiResponse.ok(homeworkService.reviewHomework(dto.getHid(), dto.getSid(), dto.getScore(), dto.getTip()));
     }
 
 

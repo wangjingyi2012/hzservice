@@ -21,7 +21,7 @@ public interface StudentHomeworkMapper {
     boolean reviewHomework(@Param("hid") Integer hid,
                            @Param("sid") Integer sid,
                            @Param("score") Integer score,
-                           @Param("tip") String comment,
+                           @Param("tip") String tip,
                            @Param("status") String status,
                            @Param("scoretime") LocalDateTime scoretime);
 }

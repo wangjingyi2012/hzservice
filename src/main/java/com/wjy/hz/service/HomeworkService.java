@@ -18,6 +18,6 @@ public interface HomeworkService {
 
     List<ReviewProgressPublicDto> reviewPublicProgress();
 
-    boolean reviewHomework(Integer hid, Integer sid, Integer score, String comment);
+    boolean reviewHomework(Integer hid, Integer sid, Integer score, String tip);
 
 }
