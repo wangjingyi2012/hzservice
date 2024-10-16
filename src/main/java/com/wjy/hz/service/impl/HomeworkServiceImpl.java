@@ -1,9 +1,6 @@
 package com.wjy.hz.service.impl;
 
-import com.wjy.hz.mapper.BlogMapper;
-import com.wjy.hz.mapper.CommentMapper;
-import com.wjy.hz.mapper.HomeworkMapper;
-import com.wjy.hz.mapper.StudentMapper;
+import com.wjy.hz.mapper.*;
 import com.wjy.hz.model.dto.*;
 import com.wjy.hz.model.entity.*;
 import com.wjy.hz.service.BlogService;
@@ -24,6 +21,9 @@ public class HomeworkServiceImpl implements HomeworkService {
     @Resource
     StudentMapper studentMapper;
 
+    @Resource
+    StudentHomeworkMapper studentHomeworkMapper;
+
     @Override
     public List<HomeworkEntity> allHomeworks() {
         return homeworkMapper.allHomeworks();
@@ -34,7 +34,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         // 查询学生信息
         StudentEntity student = studentMapper.selectById(sid);
         // 查询作业信息
-        HomeworkEntity homework = homeworkMapper.selectById(hid);
+        HomeworkEntity homework = homeworkMapper.selectById(hid.longValue());
         // 查询学生的作业提交信息
         UserHomeworkEntity userHomework = homeworkMapper.getBySid(hid, sid);
 
@@ -88,7 +88,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     @Override
     public Boolean submitHomework(String fileUrl, Integer sid, Integer hid, String comment) {
         // 查询作业信息
-        HomeworkEntity homework = homeworkMapper.selectById(hid);
+        HomeworkEntity homework = homeworkMapper.selectById(hid.longValue());
         if (homework == null) {
             System.out.println("作业不存在");
             return false;
@@ -128,6 +128,31 @@ public class HomeworkServiceImpl implements HomeworkService {
         }
 
         return true;
+    }
+
+    @Override
+    public List<ReviewProgressPublicDto> reviewPublicProgress() {
+        List<UserHomeworkEntity> allHomeworks = studentHomeworkMapper.all();
+        List<ReviewProgressPublicDto> retLists = new ArrayList<>();
+        allHomeworks.forEach(sh -> {
+            StudentEntity student = studentMapper.selectById(sh.getSid());
+            HomeworkEntity homework = homeworkMapper.selectById(sh.getHid());
+
+            if (student != null && homework != null) {
+                ReviewProgressPublicDto dto = new ReviewProgressPublicDto();
+                dto.setUsername(student.getUsername());
+                dto.setHomeworkName(homework.getName());
+                dto.setScore(sh.getScore());
+                dto.setScoretime(sh.getScoretime());
+                if (sh.getScore() != null && sh.getScoretime() != null) {
+                    dto.setStatus("已阅");
+                } else {
+                    dto.setStatus("排队中");
+                }
+                retLists.add(dto);
+            }
+        });
+        return retLists;
     }
 
 

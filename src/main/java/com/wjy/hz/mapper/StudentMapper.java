@@ -24,4 +24,5 @@ public interface StudentMapper {
 
     @Update("update students set points = #{points} where id = #{sid}}")
     int updatePoint(@Param("sid") long sid, @Param("points") int points);
+
 }

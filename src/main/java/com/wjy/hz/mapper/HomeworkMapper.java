@@ -16,7 +16,7 @@ public interface HomeworkMapper {
     UserHomeworkEntity getBySid(@Param("hid") Integer hid, @Param("sid") Integer sid);
 
     @Select("select * from homeworks where id = #{id}")
-    HomeworkEntity selectById(Integer id);
+    HomeworkEntity selectById(Long id);
 
     // 新增插入作业提交记录的方法
     @Insert("INSERT INTO user_homeworks (sid, hid, file, stime, comment, status) " +

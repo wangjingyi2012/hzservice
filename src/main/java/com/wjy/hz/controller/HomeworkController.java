@@ -31,6 +31,11 @@ public class HomeworkController {
         return ApiResponse.ok(homeworkService.getHomeworkOfUser(sid, hid));
     }
 
+    @GetMapping("/api/homework/public/review-progress")
+    public String reviewHomeProgress() {
+        return ApiResponse.ok(homeworkService.reviewPublicProgress());
+    }
+
     @PostMapping("/api/homework/student-homework-submit")
     public String submitHomework(@RequestParam("sid") Integer sid,
                                  @RequestParam("hid") Integer hid,

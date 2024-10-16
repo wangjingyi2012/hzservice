@@ -14,4 +14,6 @@ public interface HomeworkService {
 
     Boolean submitHomework(String fileUrl, Integer sid, Integer hid, String comment);
 
+    List<ReviewProgressPublicDto> reviewPublicProgress();
+
 }

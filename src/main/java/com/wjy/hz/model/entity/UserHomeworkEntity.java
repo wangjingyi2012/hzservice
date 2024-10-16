@@ -17,7 +17,7 @@ public class UserHomeworkEntity {
 
     private long sid;
 
-    private int score;
+    private Integer score;
 
     private LocalDateTime scoretime;
 
