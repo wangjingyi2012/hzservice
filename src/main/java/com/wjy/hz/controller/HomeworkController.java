@@ -57,7 +57,7 @@ public class HomeworkController {
         String fileUrl = "/wjy/hm/" + newFilename;
 
         // 调用服务层保存作业提交记录
-        homeworkService.submitHomework(fileUrl, sid, hid);
+        homeworkService.submitHomework(fileUrl, sid, hid, comment);
 
         return ApiResponse.ok("提交作业成功");
     }

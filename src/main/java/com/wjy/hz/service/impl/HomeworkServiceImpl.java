@@ -86,7 +86,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public Boolean submitHomework(String fileUrl, Integer sid, Integer hid) {
+    public Boolean submitHomework(String fileUrl, Integer sid, Integer hid, String comment) {
         // 查询作业信息
         HomeworkEntity homework = homeworkMapper.selectById(hid);
         if (homework == null) {
@@ -111,7 +111,7 @@ public class HomeworkServiceImpl implements HomeworkService {
             newSubmission.setHid(hid); // 设置作业ID
             newSubmission.setFile(fileUrl); // 设置文件路径
             newSubmission.setStime(LocalDateTime.now()); // 设置提交时间
-            newSubmission.setComment(""); // 附言为空或前端传递的附言
+            newSubmission.setComment(comment); // 附言为空或前端传递的附言
             newSubmission.setStatus("已提交"); // 提交状态
 
             // 插入新提交记录
@@ -120,7 +120,7 @@ public class HomeworkServiceImpl implements HomeworkService {
             // 如果有记录，更新提交记录
             existingSubmission.setFile(fileUrl); // 更新文件路径
             existingSubmission.setStime(LocalDateTime.now()); // 更新提交时间
-            existingSubmission.setComment(""); // 更新附言，假设前端会传递附言
+            existingSubmission.setComment(comment); // 更新附言，假设前端会传递附言
             existingSubmission.setStatus("已提交"); // 更新状态为已提交
 
             // 更新现有提交记录
