@@ -65,7 +65,7 @@ public class HomeworkController {
         }
 
         // 返回文件的访问路径，可以存储在数据库中
-        String fileUrl = "/wjy/hm/" + newFilename;
+        String fileUrl = "http://www.hz-study-system.com/wjy/hm/" + newFilename;
 
         // 调用服务层保存作业提交记录
         homeworkService.submitHomework(fileUrl, sid, hid, comment);
