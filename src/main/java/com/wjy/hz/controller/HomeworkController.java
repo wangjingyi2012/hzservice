@@ -42,6 +42,16 @@ public class HomeworkController {
         return ApiResponse.ok(homeworkService.reviewPublicProgress());
     }
 
+    @PostMapping("/api/teacher/homework/review")
+    public String reviewHomework(@RequestParam("hid") Integer hid,
+                                 @RequestParam("sid") Integer sid,
+                                 @RequestParam("score") Integer score,
+                                 @RequestParam(value = "comment", required = false) String comment) {
+        return ApiResponse.ok(homeworkService.reviewHomework(hid, sid, score, comment));
+    }
+
+
+
     @PostMapping("/api/homework/student-homework-submit")
     public String submitHomework(@RequestParam("sid") Integer sid,
                                  @RequestParam("hid") Integer hid,

@@ -161,5 +161,11 @@ public class HomeworkServiceImpl implements HomeworkService {
         return retLists;
     }
 
+    @Override
+    public boolean reviewHomework(Integer hid, Integer sid, Integer score, String comment) {
+        LocalDateTime scoreTime = LocalDateTime.now();
+        return studentHomeworkMapper.reviewHomework(hid, sid, score, comment, "已评分", scoreTime);
+    }
+
 
 }
