@@ -24,4 +24,6 @@ public interface StudentService {
 
     int uploadAvator(long sid, MultipartFile file);
 
+    List<StudentDto> allStudents();
+
 }

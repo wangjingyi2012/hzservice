@@ -1,5 +1,6 @@
 package com.wjy.hz.mapper;
 
+import com.wjy.hz.model.dto.StudentDto;
 import com.wjy.hz.model.entity.ExamEntity;
 import com.wjy.hz.model.entity.StudentEntity;
 import com.wjy.hz.model.entity.UserExamEntity;
@@ -9,6 +10,9 @@ import java.util.List;
 
 @Mapper
 public interface StudentMapper {
+
+    @Select("select * from students")
+    List<StudentDto> allStudents();
 
     @Select("select * from students where number = #{number} and password = #{password}")
     StudentEntity login(@Param("number") String number, @Param("password") String password);

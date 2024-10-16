@@ -86,6 +86,12 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
+    public UserHomeworkEntity getHomeworkOfStudent2Teacher(Integer sid, Integer hid) {
+        UserHomeworkEntity userHomework = homeworkMapper.getBySid(hid, sid);
+        return userHomework;
+    }
+
+    @Override
     public Boolean submitHomework(String fileUrl, Integer sid, Integer hid, String comment) {
         // 查询作业信息
         HomeworkEntity homework = homeworkMapper.selectById(hid.longValue());

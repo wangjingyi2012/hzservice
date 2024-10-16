@@ -30,6 +30,11 @@ public class StudentController {
     @Resource
     StemService stemService;
 
+    @GetMapping("/api/student/all-students")
+    public String allStudents() {
+        return ApiResponse.ok(studentService.allStudents());
+    }
+
     @GetMapping("/api/student/user-info")
     public String userInfo(@RequestParam("sid") long sid) {
         StudentDto studentDto = studentService.infoById(sid);

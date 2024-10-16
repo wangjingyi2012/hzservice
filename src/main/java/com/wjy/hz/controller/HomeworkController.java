@@ -31,6 +31,12 @@ public class HomeworkController {
         return ApiResponse.ok(homeworkService.getHomeworkOfUser(sid, hid));
     }
 
+    @GetMapping("/api/teacher/homework/student-homework")
+    public String teacherHomeworkList(@RequestParam("sid") Integer sid,
+                               @RequestParam("hid") Integer hid) {
+        return ApiResponse.ok(homeworkService.getHomeworkOfStudent2Teacher(sid, hid));
+    }
+
     @GetMapping("/api/homework/public/review-progress")
     public String reviewHomeProgress() {
         return ApiResponse.ok(homeworkService.reviewPublicProgress());
@@ -66,5 +72,7 @@ public class HomeworkController {
 
         return ApiResponse.ok("提交作业成功");
     }
+
+
 
 }

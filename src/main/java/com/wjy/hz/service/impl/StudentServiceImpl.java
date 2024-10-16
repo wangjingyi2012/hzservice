@@ -175,5 +175,10 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.updateAvator(sid, filepath);
     }
 
+    @Override
+    public List<StudentDto> allStudents() {
+        return studentMapper.allStudents();
+    }
+
 
 }

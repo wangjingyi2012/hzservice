@@ -12,6 +12,8 @@ public interface HomeworkService {
 
     StudentHomeworkDto getHomeworkOfUser(Integer sid, Integer hid);
 
+    UserHomeworkEntity getHomeworkOfStudent2Teacher(Integer sid, Integer hid);
+
     Boolean submitHomework(String fileUrl, Integer sid, Integer hid, String comment);
 
     List<ReviewProgressPublicDto> reviewPublicProgress();
