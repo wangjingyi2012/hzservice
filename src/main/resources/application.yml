@@ -4,6 +4,10 @@ spring:
     url: jdbc:mysql://154.19.186.138:3306/school_service?useSSL=false
     username: root
     password: iloveudss2006
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 server:
   address: 0.0.0.0
   port: 80
