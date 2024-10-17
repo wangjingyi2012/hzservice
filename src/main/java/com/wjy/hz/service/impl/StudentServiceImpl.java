@@ -2,12 +2,9 @@ package com.wjy.hz.service.impl;
 
 import com.wjy.hz.mapper.*;
 import com.wjy.hz.model.dto.UserExamDto;
-import com.wjy.hz.model.entity.ExamEntity;
-import com.wjy.hz.model.entity.UserExamEntity;
+import com.wjy.hz.model.entity.*;
 import com.wjy.hz.model.enums.LogActions;
 import com.wjy.hz.model.dto.StudentDto;
-import com.wjy.hz.model.entity.SettingEntity;
-import com.wjy.hz.model.entity.TimelineEntity;
 import com.wjy.hz.service.FileStorageService;
 import com.wjy.hz.service.StudentService;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,6 +40,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Resource
     ExamMapper examMapper;
+
+    @Resource
+    HomeworkMapper homeworkMapper;
 
     @Resource
     FileStorageService fileStorageService;
@@ -177,8 +177,55 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDto> allStudents() {
-        return studentMapper.allStudents();
+        List<StudentDto> ss = studentMapper.allStudents();
+        return ss;
     }
+
+    @Override
+    public List<StudentDto> allReviewStudents(Integer hid) {
+        // 获取所有学生
+        List<StudentDto> allStudents = studentMapper.allStudents();
+
+        // 创建返回列表
+        List<StudentDto> retList = new ArrayList<>();
+
+        // 遍历所有学生
+        for (StudentDto student : allStudents) {
+            // 查询学生的作业提交情况
+            UserHomeworkEntity userHomework = homeworkMapper.getBySid(hid, (int)student.getId());
+
+            // 创建一个新的学生 DTO
+            StudentDto dto = new StudentDto();
+            dto.setId(student.getId());
+            dto.setRealname(student.getRealname());
+            dto.setUsername(student.getUsername());
+            dto.setAvator(student.getAvator());
+            dto.setGender(student.getGender());
+            dto.setNumber(student.getNumber());
+            dto.setLevel(student.getLevel());
+
+            // 根据作业提交情况标注
+            if (userHomework == null) {
+                // 未交作业
+                dto.setRealname(dto.getRealname() + "（未交）");
+                dto.setUsername(dto.getUsername() + "（未交）");
+            } else if (userHomework.getScoretime() != null) {
+                // 已评分
+                dto.setRealname(dto.getRealname() + "（已评分）(" + userHomework.getScore() + ")");
+                dto.setUsername(dto.getUsername() + "（已评分）(" + userHomework.getScore() + ")");
+            } else {
+                // 待评分
+                dto.setRealname(dto.getRealname() + "（待评分）");
+                dto.setUsername(dto.getUsername() + "（待评分）");
+            }
+
+            // 将标注后的学生 DTO 添加到返回列表
+            retList.add(dto);
+        }
+
+        return retList;
+    }
+
 
 
 }

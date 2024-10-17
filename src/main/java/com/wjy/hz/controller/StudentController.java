@@ -6,6 +6,7 @@ import com.wjy.hz.model.dto.StudentDto;
 import com.wjy.hz.model.dto.UserExamInputDto;
 import com.wjy.hz.model.entity.PaperEntity;
 import com.wjy.hz.service.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -33,6 +34,11 @@ public class StudentController {
     @GetMapping("/api/student/all-students")
     public String allStudents() {
         return ApiResponse.ok(studentService.allStudents());
+    }
+
+    @GetMapping("/api/student/all-review-students")
+    public String allReviewStudents(@RequestParam("hid") Integer hid) {
+        return ApiResponse.ok(studentService.allReviewStudents(hid));
     }
 
     @GetMapping("/api/student/user-info")

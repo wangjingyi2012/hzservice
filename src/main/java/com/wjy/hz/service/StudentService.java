@@ -26,4 +26,6 @@ public interface StudentService {
 
     List<StudentDto> allStudents();
 
+    List<StudentDto> allReviewStudents(Integer hid);
+
 }
