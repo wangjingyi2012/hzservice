@@ -72,7 +72,7 @@ public class FileController {
     public String uploadAvatar(@RequestParam("avatar") MultipartFile file, @RequestParam("sid") Long studentId) {
         try {
             // 更新用户头像信息
-             int result = studentService.uploadAvator(studentId, file);
+            int result = studentService.uploadAvator(studentId, file);
             return result > 0 ? ApiResponse.ok(studentId) : ApiResponse.intError();
         } catch (Exception e) {
             e.printStackTrace();

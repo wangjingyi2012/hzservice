@@ -11,6 +11,8 @@ import com.wjy.hz.model.entity.BlogEntity;
 import com.wjy.hz.model.entity.CommentEntity;
 import com.wjy.hz.model.entity.StudentEntity;
 import com.wjy.hz.service.BlogService;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -107,6 +109,12 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public int postComment(CommentInputDto input) {
         CommentEntity entity = new CommentEntity();
+
+        // 在设置content前添加过滤逻辑
+        // 保留基础标签，过滤危险脚本
+        String safeContent = Jsoup.clean(input.getContent(), Whitelist.basic());
+        entity.setContent(safeContent);
+
         entity.setContent(input.getContent());
         entity.setPubtime(LocalDateTime.now());
         entity.setAuthor(input.getSid());

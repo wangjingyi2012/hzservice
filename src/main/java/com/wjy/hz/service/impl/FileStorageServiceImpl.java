@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Service
@@ -26,7 +27,9 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         try {
             // 保存文件
-            Files.copy(file.getInputStream(), targetLocation);
+//            Files.copy(file.getInputStream(), targetLocation);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
         } catch (Exception exception) {
             exception.printStackTrace();
         }
