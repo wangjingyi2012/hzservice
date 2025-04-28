@@ -35,11 +35,11 @@ public class ZDController {
                                 @RequestParam("result") String result,
                                 @RequestParam("kda") String kda,
                                 @RequestParam("hero") Integer heroId) {
-        return ApiResponse.ok("ok");
+        return ApiResponse.ok(zdService.addAttendance(personId, result, kda, heroId, "normal") > 0 ? "ok" : "error");
     }
 
     @GetMapping("/api/zd-manager/get-heros")
     public String getHeros() {
-        return ApiResponse.ok("ok");
+        return ApiResponse.ok(zdService.getAllHeros());
     }
 }
