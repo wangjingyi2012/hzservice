@@ -1,6 +1,7 @@
 package com.wjy.hz.mapper.zd;
 
 import com.wjy.hz.model.dto.zd.AttendanceDto;
+import com.wjy.hz.model.entity.zd.ZDPersonEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -15,4 +16,7 @@ public interface AttendanceMapper {
             "LEFT JOIN zd_heros h ON r.hero = h.id " +
             "LIMIT #{offset}, #{size}")
     List<AttendanceDto> getAttendanceList(int offset, int size);
+
+    @Select("select * from zd_person")
+    List<ZDPersonEntity> getAllPerson();
 }

@@ -23,4 +23,9 @@ public class ZDController {
         int validSize = size <= 0 ? 10 : size;
         return ApiResponse.ok(zdService.getAttendanceList(validPage, validSize));
     }
+
+    @GetMapping("/api/zd/person-list")
+    public String getAllPerson() {
+        return ApiResponse.ok(zdService.getAllPerson());
+    }
 }

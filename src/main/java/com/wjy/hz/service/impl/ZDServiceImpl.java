@@ -2,6 +2,7 @@ package com.wjy.hz.service.impl;
 
 import com.wjy.hz.mapper.zd.AttendanceMapper;
 import com.wjy.hz.model.dto.zd.AttendanceDto;
+import com.wjy.hz.model.entity.zd.ZDPersonEntity;
 import com.wjy.hz.service.ZDService;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +20,10 @@ public class ZDServiceImpl implements ZDService {
     public List<AttendanceDto> getAttendanceList(int page, int size) {
         int offset = (page - 1) * size;
         return attendanceMapper.getAttendanceList(offset, size);
+    }
+
+    @Override
+    public List<ZDPersonEntity> getAllPerson() {
+        return attendanceMapper.getAllPerson();
     }
 }
