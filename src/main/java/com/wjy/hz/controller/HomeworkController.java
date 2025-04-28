@@ -55,31 +55,38 @@ public class HomeworkController {
                                  @RequestParam("hid") Integer hid,
                                  @RequestParam("file") MultipartFile file,
                                  @RequestParam(value = "comment", required = false) String comment) {
-        // 定义文件保存目录
-        String uploadDir = "/webapp/homework/2024-1/";
-        // 获取原始文件名，并加上唯一标识符防止文件名冲突
+        // 1. 判断 OS，拼出一个 **绝对** 路径
+        String os = System.getProperty("os.name").toLowerCase();
+        String uploadDir;
+        if (os.contains("mac")) {
+            uploadDir = System.getProperty("user.dir") + File.separator + "uploaddir";
+        } else {
+            uploadDir = "/webapp/homework/2024-1";
+        }
+        System.out.println(uploadDir);
+
+        // 2. 先创建目录（如果不存在）
+        File dir = new File(uploadDir);
+        if (!dir.exists() && !dir.mkdirs()) {
+            return "无法创建上传目录：" + uploadDir;
+        }
+
+        // 3. 生成新文件名，保存文件
         String originalFilename = file.getOriginalFilename();
         String newFilename = UUID.randomUUID() + "_" + originalFilename;
-
-        // 创建目标文件
-        File destFile = new File(uploadDir + newFilename);
-
+        File destFile = new File(dir, newFilename);
         try {
-            // 保存文件到指定目录
             file.transferTo(destFile);
         } catch (IOException e) {
             e.printStackTrace();
             return "文件上传失败";
         }
 
-        // 返回文件的访问路径，可以存储在数据库中
         String fileUrl = "http://www.hz-study-system.com/wjy/hm/" + newFilename;
-
-        // 调用服务层保存作业提交记录
         homeworkService.submitHomework(fileUrl, sid, hid, comment);
-
         return ApiResponse.ok("提交作业成功");
     }
+
 
 
 
