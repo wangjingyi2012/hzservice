@@ -1,10 +1,14 @@
 package com.wjy.hz.mapper.zd;
 
 import com.wjy.hz.model.dto.zd.AttendanceDto;
+import com.wjy.hz.model.entity.zd.ZDHeroEntity;
 import com.wjy.hz.model.entity.zd.ZDPersonEntity;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -19,4 +23,18 @@ public interface AttendanceMapper {
 
     @Select("select * from zd_person")
     List<ZDPersonEntity> getAllPerson();
+
+    @Insert("INSERT INTO zd_person_record (attendance, person, result, kda, hero, type) " +
+            "VALUES (#{attendance}, #{person}, #{result}, #{kda}, #{hero}, #{type})")
+    int addAttendance(@Param("attendance") LocalDateTime attendance,
+                      @Param("person") int person,
+                      @Param("result") String result,
+                      @Param("kda") String kda,
+                      @Param("hero") int hero,
+                      @Param("type") String type);
+
+
+    @Select("SELECT * FROM zd_heros")
+    List<ZDHeroEntity> getAllHeros();
+
 }

@@ -3,6 +3,7 @@ package com.wjy.hz.controller.zd;
 import com.wjy.hz.model.api.ApiResponse;
 import com.wjy.hz.service.ZDService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,5 +28,18 @@ public class ZDController {
     @GetMapping("/api/zd/person-list")
     public String getAllPerson() {
         return ApiResponse.ok(zdService.getAllPerson());
+    }
+
+    @PostMapping("/api/zd-manager/add-attendance")
+    public String addAttendance(@RequestParam("personId") Integer personId,
+                                @RequestParam("result") String result,
+                                @RequestParam("kda") String kda,
+                                @RequestParam("hero") Integer heroId) {
+        return ApiResponse.ok("ok");
+    }
+
+    @GetMapping("/api/zd-manager/get-heros")
+    public String getHeros() {
+        return ApiResponse.ok("ok");
     }
 }
