@@ -18,12 +18,12 @@ public interface AttendanceMapper {
             "FROM zd_person_record r " +
             "JOIN zd_person p ON r.person = p.id " +
             "LEFT JOIN zd_heros h ON r.hero = h.id " +
-            "<if test='personId != null'>WHERE r.person = #{personId}</if> " +  // 动态添加人员ID筛选条件
+            "WHERE r.person = #{personId} " +  // personId 为 null 时，MyBatis 会忽略此条件（查询所有）
             "LIMIT #{offset}, #{size}")
     List<AttendanceDto> getAttendanceList(
+            @Param("personId") Integer personId,
             @Param("offset") int offset,
-            @Param("size") int size,
-            @Param("personId") Integer personId
+            @Param("size") int size
     );
 
     @Select("select * from zd_person")
