@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wjy.hz.mapper.zd.AttendanceMapper">
+
+    <select id="getAttendanceList" resultType="com.wjy.hz.model.dto.zd.AttendanceDto">
+        SELECT
+        r.id,
+        p.name,
+        p.avatar,
+        r.type,
+        r.attendance,
+        h.hname,
+        h.havatar,
+        r.result,
+        r.kda
+        FROM zd_person_record r
+        JOIN zd_person p ON r.person = p.id
+        LEFT JOIN zd_heros h ON r.hero = h.id
+        <where>  <!-- 动态 WHERE 子句，自动处理条件拼接 -->
+            <if test="personId != null">
+                r.person = #{personId}
+            </if>
+        </where>
+        LIMIT #{offset}, #{size}  <!-- 正确顺序：先 offset，后 size -->
+    </select>
+
+</mapper>

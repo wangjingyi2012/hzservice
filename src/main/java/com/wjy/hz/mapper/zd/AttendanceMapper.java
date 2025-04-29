@@ -14,17 +14,24 @@ import java.util.List;
 @Mapper
 public interface AttendanceMapper {
 
-    @Select("SELECT r.id, p.name, p.avatar, r.type, r.attendance, h.hname, h.havatar, r.result, r.kda " +
-            "FROM zd_person_record r " +
-            "JOIN zd_person p ON r.person = p.id " +
-            "LEFT JOIN zd_heros h ON r.hero = h.id " +
-            "WHERE r.person = #{personId} " +  // personId 为 null 时，MyBatis 会忽略此条件（查询所有）
-            "LIMIT #{offset}, #{size}")
+//    @Select("SELECT r.id, p.name, p.avatar, r.type, r.attendance, h.hname, h.havatar, r.result, r.kda " +
+//            "FROM zd_person_record r " +
+//            "JOIN zd_person p ON r.person = p.id " +
+//            "LEFT JOIN zd_heros h ON r.hero = h.id " +
+//            "WHERE r.person = #{personId} " +  // personId 为 null 时，MyBatis 会忽略此条件（查询所有）
+//            "LIMIT #{offset}, #{size}")
+//    List<AttendanceDto> getAttendanceList(
+//            @Param("personId") Integer personId,
+//            @Param("offset") int offset,
+//            @Param("size") int size
+//    );
+
     List<AttendanceDto> getAttendanceList(
-            @Param("personId") Integer personId,
             @Param("offset") int offset,
-            @Param("size") int size
+            @Param("size") int size,
+            @Param("personId") Integer personId
     );
+
 
     @Select("select * from zd_person")
     List<ZDPersonEntity> getAllPerson();

@@ -19,9 +19,11 @@ public class ZDServiceImpl implements ZDService {
     private AttendanceMapper attendanceMapper;
 
     @Override
-    public List<AttendanceDto> getAttendanceList(int page, int size, Integer persionId) {
+    public List<AttendanceDto> getAttendanceList(int page, int size, Integer personId) {
         int offset = (page - 1) * size;
-        return attendanceMapper.getAttendanceList(offset, size, persionId);
+        // 参数顺序：offset, size, personId（与 XML 映射文件一致）
+        size = Math.max(1, size);
+        return attendanceMapper.getAttendanceList(offset, size, personId);
     }
 
     @Override
