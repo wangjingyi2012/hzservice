@@ -13,3 +13,6 @@ server:
   port: 80
 file:
   upload-dir: /webapp/images/uploads/
+
+mybatis:
+  mapper-locations: classpath:mapper/zd/*.xml
