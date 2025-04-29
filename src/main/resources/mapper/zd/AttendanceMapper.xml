@@ -21,6 +21,7 @@
                 r.person = #{personId}
             </if>
         </where>
+        ORDER BY r.id DESC
         LIMIT #{offset}, #{size}  <!-- 正确顺序：先 offset，后 size -->
     </select>
 
