@@ -18,11 +18,12 @@ public class ZDController {
     @GetMapping("/api/zd/attendance-list")
     public String getAttendanceList(
             @RequestParam(name = "page", defaultValue = "1") Integer page,  // 默认值1
-            @RequestParam(name = "size", defaultValue = "10") Integer size   // 默认值10
+            @RequestParam(name = "size", defaultValue = "10") Integer size,   // 默认值10
+            @RequestParam(name = "personId", required = false) Integer personId  // 新增人员ID筛选参数
     ) {
         int validPage = page <= 0 ? 1 : page;
         int validSize = size <= 0 ? 10 : size;
-        return ApiResponse.ok(zdService.getAttendanceList(validPage, validSize));
+        return ApiResponse.ok(zdService.getAttendanceList(validPage, validSize, personId));
     }
 
     @GetMapping("/api/zd/person-list")

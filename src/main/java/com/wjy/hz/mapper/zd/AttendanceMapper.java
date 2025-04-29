@@ -18,8 +18,13 @@ public interface AttendanceMapper {
             "FROM zd_person_record r " +
             "JOIN zd_person p ON r.person = p.id " +
             "LEFT JOIN zd_heros h ON r.hero = h.id " +
+            "<if test='personId != null'>WHERE r.person = #{personId}</if> " +  // 动态添加人员ID筛选条件
             "LIMIT #{offset}, #{size}")
-    List<AttendanceDto> getAttendanceList(int offset, int size);
+    List<AttendanceDto> getAttendanceList(
+            @Param("offset") int offset,
+            @Param("size") int size,
+            @Param("personId") Integer personId
+    );
 
     @Select("select * from zd_person")
     List<ZDPersonEntity> getAllPerson();

@@ -19,9 +19,9 @@ public class ZDServiceImpl implements ZDService {
     private AttendanceMapper attendanceMapper;
 
     @Override
-    public List<AttendanceDto> getAttendanceList(int page, int size) {
+    public List<AttendanceDto> getAttendanceList(int page, int size, Integer persionId) {
         int offset = (page - 1) * size;
-        return attendanceMapper.getAttendanceList(offset, size);
+        return attendanceMapper.getAttendanceList(offset, size, persionId);
     }
 
     @Override

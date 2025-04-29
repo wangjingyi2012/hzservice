@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ZDService {
 
-    List<AttendanceDto> getAttendanceList(int page, int size);
+    List<AttendanceDto> getAttendanceList(int page, int size, Integer persionId);
 
     List<ZDPersonEntity> getAllPerson();
 
