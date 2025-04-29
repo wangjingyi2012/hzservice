@@ -25,4 +25,6 @@ public class AttendanceDto {
 
     private String kda; // user's kda
 
+    private String attendanceInfo;
+
 }
