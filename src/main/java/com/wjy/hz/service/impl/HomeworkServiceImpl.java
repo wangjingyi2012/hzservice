@@ -107,6 +107,13 @@ public class HomeworkServiceImpl implements HomeworkService {
             return false;
         }
 
+        // 检查作业是否已截止
+        LocalDateTime now = LocalDateTime.now();
+        if (homework.getEndtime() != null && homework.getEndtime().isBefore(now)) {
+            System.out.println("作业已截止，无法提交");
+            return false;
+        }
+
         // 查询是否已经有提交记录
         UserHomeworkEntity existingSubmission = homeworkMapper.getBySid(hid, sid);
 
